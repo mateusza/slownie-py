@@ -4,62 +4,63 @@ import pytest
 
 import slownie
 
+
 class Test_Odmien():
     odmiana_kota = ['kot', 'koty', 'kotów']
 
     odmiana_testy = [
-        (0, odmiana_kota,'kotów'),
-        (1, odmiana_kota,'kot'),
-        (2, odmiana_kota,'koty'),
-        (3, odmiana_kota,'koty'),
-        (4, odmiana_kota,'koty'),
-        (5, odmiana_kota,'kotów'),
-        (6, odmiana_kota,'kotów'),
-        (10, odmiana_kota,'kotów'),
-        (11, odmiana_kota,'kotów'),
-        (12, odmiana_kota,'kotów'),
-        (13, odmiana_kota,'kotów'),
-        (14, odmiana_kota,'kotów'),
-        (19, odmiana_kota,'kotów'),
-        (20, odmiana_kota,'kotów'),
-        (21, odmiana_kota,'kotów'),
-        (22, odmiana_kota,'koty'),
-        (23, odmiana_kota,'koty'),
-        (24, odmiana_kota,'koty'),
-        (25, odmiana_kota,'kotów'),
-        (29, odmiana_kota,'kotów'),
-        (30, odmiana_kota,'kotów'),
-        (31, odmiana_kota,'kotów'),
-        (32, odmiana_kota,'koty'),
-        (33, odmiana_kota,'koty'),
-        (34, odmiana_kota,'koty'),
-        (35, odmiana_kota,'kotów'),
-        (39, odmiana_kota,'kotów'),
-        (40, odmiana_kota,'kotów'),
-        (41, odmiana_kota,'kotów'),
-        (42, odmiana_kota,'koty'),
-        (43, odmiana_kota,'koty'),
-        (44, odmiana_kota,'koty'),
-        (45, odmiana_kota,'kotów'),
-        (49, odmiana_kota,'kotów'),
-        (99, odmiana_kota,'kotów'),
-        (100, odmiana_kota,'kotów'),
-        (101, odmiana_kota,'kotów'),
-        (102, odmiana_kota,'koty'),
-        (103, odmiana_kota,'koty'),
-        (105, odmiana_kota,'kotów'),
-        (112, odmiana_kota,'kotów'),
-        (115, odmiana_kota,'kotów'),
-        (122, odmiana_kota,'koty'),
-        (125, odmiana_kota,'kotów'),
-        (200, odmiana_kota,'kotów'),
-        (201, odmiana_kota,'kotów'),
-        (202, odmiana_kota,'koty'),
-        (203, odmiana_kota,'koty'),
-        (205, odmiana_kota,'kotów'),
-        (215, odmiana_kota,'kotów'),
-        (222, odmiana_kota,'koty'),
-        (905, odmiana_kota,'kotów')
+        (0, odmiana_kota, 'kotów'),
+        (1, odmiana_kota, 'kot'),
+        (2, odmiana_kota, 'koty'),
+        (3, odmiana_kota, 'koty'),
+        (4, odmiana_kota, 'koty'),
+        (5, odmiana_kota, 'kotów'),
+        (6, odmiana_kota, 'kotów'),
+        (10, odmiana_kota, 'kotów'),
+        (11, odmiana_kota, 'kotów'),
+        (12, odmiana_kota, 'kotów'),
+        (13, odmiana_kota, 'kotów'),
+        (14, odmiana_kota, 'kotów'),
+        (19, odmiana_kota, 'kotów'),
+        (20, odmiana_kota, 'kotów'),
+        (21, odmiana_kota, 'kotów'),
+        (22, odmiana_kota, 'koty'),
+        (23, odmiana_kota, 'koty'),
+        (24, odmiana_kota, 'koty'),
+        (25, odmiana_kota, 'kotów'),
+        (29, odmiana_kota, 'kotów'),
+        (30, odmiana_kota, 'kotów'),
+        (31, odmiana_kota, 'kotów'),
+        (32, odmiana_kota, 'koty'),
+        (33, odmiana_kota, 'koty'),
+        (34, odmiana_kota, 'koty'),
+        (35, odmiana_kota, 'kotów'),
+        (39, odmiana_kota, 'kotów'),
+        (40, odmiana_kota, 'kotów'),
+        (41, odmiana_kota, 'kotów'),
+        (42, odmiana_kota, 'koty'),
+        (43, odmiana_kota, 'koty'),
+        (44, odmiana_kota, 'koty'),
+        (45, odmiana_kota, 'kotów'),
+        (49, odmiana_kota, 'kotów'),
+        (99, odmiana_kota, 'kotów'),
+        (100, odmiana_kota, 'kotów'),
+        (101, odmiana_kota, 'kotów'),
+        (102, odmiana_kota, 'koty'),
+        (103, odmiana_kota, 'koty'),
+        (105, odmiana_kota, 'kotów'),
+        (112, odmiana_kota, 'kotów'),
+        (115, odmiana_kota, 'kotów'),
+        (122, odmiana_kota, 'koty'),
+        (125, odmiana_kota, 'kotów'),
+        (200, odmiana_kota, 'kotów'),
+        (201, odmiana_kota, 'kotów'),
+        (202, odmiana_kota, 'koty'),
+        (203, odmiana_kota, 'koty'),
+        (205, odmiana_kota, 'kotów'),
+        (215, odmiana_kota, 'kotów'),
+        (222, odmiana_kota, 'koty'),
+        (905, odmiana_kota, 'kotów')
     ]
 
     @pytest.mark.parametrize('n,o,s', odmiana_testy)
@@ -105,6 +106,7 @@ class Test_Odmien():
     def test_bledny_zestawu_slow(self, w):
         with pytest.raises(ValueError):
             assert slownie.odmien(42, w)
+
 
 class Test_Grupa():
     liczby_slownie = [
@@ -170,6 +172,7 @@ class Test_Grupa():
     def test_wartosci_innych_typow(sel, n):
         with pytest.raises(TypeError):
             slownie.grupa(n)
+
 
 class Test_Liczba():
     import decimal

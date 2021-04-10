@@ -74,7 +74,7 @@ def slownie(liczba: int) -> str:
 
     segmenty = []
     while liczba > 0:
-        segmenty.append(liczba%1000)
+        segmenty.append(liczba % 1000)
         liczba //= 1000
     odmienione = [
         ' '.join((
@@ -89,8 +89,8 @@ def slownie(liczba: int) -> str:
     ]
     return ' '.join([o for o in odmienione if len(o) > 0])
 
+
 if __name__ == '__main__':
     import sys
     for arg in sys.argv[1:]:
         print(slownie(int(arg)))
-
