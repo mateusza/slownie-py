@@ -1,5 +1,7 @@
 # Słownie.py
 
+[![Python package](https://github.com/mateusza/slownie-py/actions/workflows/python-package.yml/badge.svg)](https://github.com/mateusza/slownie-py/actions/workflows/python-package.yml)
+
 Prosta biblioteka do konwersji liczb na zapis słowny w języku polskim.
 
 ## Użycie
