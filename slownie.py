@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-rzedy = (
+RZEDY = (
         ('', '', ''),
         ('tysiąc', 'tysiące', 'tysięcy'),
         ('milion', 'miliony', 'milionów'),
@@ -15,7 +15,7 @@ rzedy = (
         ('kwintyliard', 'kwintyliardy', 'kwintyliardów')
 )
 
-slowa = (
+LICZEBNIKI = (
         ('', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć',
          'sześć', 'siedem', 'osiem', 'dziewięć', 'dziesięć',
          'jedenaście', 'dwanaście', 'trzynaście', 'czternaście', 'piętnaście',
@@ -41,7 +41,7 @@ def grupa(liczba: int, zero: bool = True, wysoka: bool = False) -> str:
         return 'zero'
     if liczba == 1 and wysoka:
         return ''
-    return ' '.join((slowa[n][x] for (n,x) in ((2, s), (1, d), (0, j)) if x > 0))
+    return ' '.join((LICZEBNIKI[n][x] for (n,x) in ((2, s), (1, d), (0, j)) if x > 0))
 
 def odmien(liczba: int, slowa: list) -> str:
     if liczba < 0:
@@ -53,7 +53,7 @@ def odmien(liczba: int, slowa: list) -> str:
     slowo_jeden, slowo_dwa, slowo_piec = slowa
     if liczba == 1:
         return slowo_jeden
-    if liczba % 10 in (2, 3, 4) and liczba % 100 not in range(11, 20):
+    if liczba % 10 in (2, 3, 4) and liczba % 100 not in (12, 13, 14):
         return slowo_dwa
     return slowo_piec
 
@@ -75,7 +75,7 @@ def slownie(liczba: int) -> str:
         ' '.join([
             x for x in [
                 grupa(int(segment), (rzad, len(segmenty)) == (0, 1), rzad > 0),
-                odmien(segment, rzedy[rzad]) if rzad > 0 and segment != 0 else ''
+                odmien(segment, RZEDY[rzad]) if rzad > 0 and segment != 0 else ''
             ]
             if len(x) > 0
         ])
