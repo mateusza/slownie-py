@@ -64,6 +64,7 @@ class Test_Odmien():
 
     @pytest.mark.parametrize('n,o,s', odmiana_testy)
     def test_zakres_0_9(self, n, o, s):
+        print(f"{n} {slownie.odmien(n, o)} vs {s}")
         assert slownie.odmien(n, o) == s
 
     bledne_typy_wartosci = [
@@ -131,7 +132,11 @@ class Test_Grupa():
         (100, 'sto'),
         (200, 'dwieście'),
         (300, 'trzysta'),
-        (400, 'czterysta')
+        (400, 'czterysta'),
+        (501, 'pięćset jeden'),
+        (512, 'pięćset dwanaście'),
+        (550, 'pięćset pięćdziesiąt'),
+        (555, 'pięćset pięćdziesiąt pięć')
     ]
 
     @pytest.mark.parametrize('n,s', liczby_slownie)
@@ -168,64 +173,79 @@ class Test_Grupa():
             slownie.grupa(n)
 
 class Test_Liczba():
-    def test_zakres_0_999(self):
-        assert slownie.slownie(0) == 'zero'
-        assert slownie.slownie(1) == 'jeden'
-        assert slownie.slownie(11) == 'jedenaście'
-        assert slownie.slownie(111) == 'sto jedenaście'
+    import decimal
+    import fractions
 
-    def test_zakres_1000_999999(self):
-        assert slownie.slownie(1000) != 'jeden tysiąc'
-        assert slownie.slownie(1000) == 'tysiąc'
-        assert slownie.slownie(1001) == 'tysiąc jeden'
-        assert slownie.slownie(1011) == 'tysiąc jedenaście'
-        assert slownie.slownie(1100) == 'tysiąc sto'
-        assert slownie.slownie(1111) == 'tysiąc sto jedenaście'
-        assert slownie.slownie(2000) == 'dwa tysiące'
-        assert slownie.slownie(2001) == 'dwa tysiące jeden'
-        assert slownie.slownie(2002) == 'dwa tysiące dwa'
-        assert slownie.slownie(2003) == 'dwa tysiące trzy'
-        assert slownie.slownie(2013) == 'dwa tysiące trzynaście'
-        assert slownie.slownie(5000) == 'pięć tysięcy'
-        assert slownie.slownie(6000) == 'sześć tysięcy'
-        assert slownie.slownie(6008) == 'sześć tysięcy osiem'
-        assert slownie.slownie(12000) == 'dwanaście tysięcy'
-        assert slownie.slownie(12001) == 'dwanaście tysięcy jeden'
-        assert slownie.slownie(12010) == 'dwanaście tysięcy dziesięć'
-        assert slownie.slownie(112033) == 'sto dwanaście tysięcy trzydzieści trzy'
+    D = decimal.Decimal
+    F = fractions.Fraction
 
-    def test_ujemne(self):
-        assert slownie.slownie(-1) == "minus jeden"
-        assert slownie.slownie(-2) == "minus dwa"
-        assert slownie.slownie(-10) == "minus dziesięć"
-        assert slownie.slownie(-100) == "minus sto"
-        assert slownie.slownie(-1000) == "minus tysiąc"
+    liczby_slownie = [
+        (0, 'zero'),
+        (1, 'jeden'),
+        (11, 'jedenaście'),
+        (111, 'sto jedenaście'),
+        (1000, 'tysiąc'),
+        (1001, 'tysiąc jeden'),
+        (1011, 'tysiąc jedenaście'),
+        (1100, 'tysiąc sto'),
+        (1111, 'tysiąc sto jedenaście'),
+        (2000, 'dwa tysiące'),
+        (2001, 'dwa tysiące jeden'),
+        (2002, 'dwa tysiące dwa'),
+        (2003, 'dwa tysiące trzy'),
+        (2013, 'dwa tysiące trzynaście'),
+        (5000, 'pięć tysięcy'),
+        (6000, 'sześć tysięcy'),
+        (6008, 'sześć tysięcy osiem'),
+        (12000, 'dwanaście tysięcy'),
+        (12001, 'dwanaście tysięcy jeden'),
+        (12010, 'dwanaście tysięcy dziesięć'),
+        (112033, 'sto dwanaście tysięcy trzydzieści trzy'),
+        (1000000, 'milion'),
+        (2000000, 'dwa miliony'),
+        (3000007, 'trzy miliony siedem'),
+        (4007000, 'cztery miliony siedem tysięcy'),
+        (100e6, 'sto milionów'),
+        (1e8, 'sto milionów'),
+        (1e9, 'miliard'),
+        (2e9, 'dwa miliardy'),
+        (5e9, 'pięć miliardów'),
+        (1e12, 'bilion')
+    ]
 
-    def test_wartosci_innych_typow(self):
-        from decimal import Decimal as D
-        from fractions import Fraction as F
+    @pytest.mark.parametrize('n,s', liczby_slownie)
+    def test_liczby(self, n, s):
+        assert slownie.slownie(n) == s
 
-        with pytest.raises(TypeError):
-            slownie.slownie(1234.5)
-        with pytest.raises(TypeError):
-            slownie.slownie([1234])
-        with pytest.raises(TypeError):
-            slownie.slownie("1234")
-        with pytest.raises(TypeError):
-            slownie.slownie("qwe")
-        with pytest.raises(TypeError):
-            slownie.slownie(D(10) / D(3))
-        with pytest.raises(TypeError):
-            slownie.slownie(F(10) / F(3))
-        with pytest.raises(TypeError):
-            slownie.slownie(D(0.8) + D(0.2))
+    @pytest.mark.parametrize('n,s', ((-n, f"minus {s}") for (n, s) in liczby_slownie if n > 0))
+    def test_liczby_ujemne(self, n, s):
+        assert slownie.slownie(n) == s
 
-        assert slownie.slownie(4.0)
-        assert slownie.slownie(4.5 * 2)
-        assert slownie.slownie(D(10))
-        assert slownie.slownie(D(10.0))
-        assert slownie.slownie(D(10.25) * D(100)) 
-        assert slownie.slownie(D('10.40') * D(10)) 
-        assert slownie.slownie(F(100, 4))
-        assert slownie.slownie(F(100) / F(5)) 
+    bledne_typy = [
+        1234.5, [1234], "1234", "qwe",
+        D(10) / D(3),
+        F(10) / F(3),
+        D(0.8) + D(0.2)
+    ]
+
+    @pytest.mark.parametrize('v', bledne_typy)
+    def test_wartosci_innych_typow(self, v):
+        with pytest.raises(TypeError):
+            slownie.slownie(v)
+
+    prawidlowe_typy = [
+        4.0,
+        4.5 * 2,
+        D(10),
+        D(10.0),
+        D(10.25) * D(100),
+        D('10.40') * D(10),
+        F(100, 4),
+        F(100) / F(5)
+    ]
+
+    @pytest.mark.parametrize('v', prawidlowe_typy)
+    def test_wartosci_prawidlowych_typow(self, v):
+        print(v, slownie.slownie(v))
+        assert slownie.slownie(v)
 
