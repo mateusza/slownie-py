@@ -65,7 +65,7 @@ class Test_Odmien():
             ]
         ]
     )
-    def test_zakres_0_9(self, n, o, s):
+    def test_odmiana(self, n, o, s):
         print(f"{n} {slownie.odmien(n, o)} vs {s}")
         assert slownie.odmien(n, o) == s
 
@@ -98,8 +98,7 @@ class Test_Odmien():
         range(1, 10),
         list(range(1, 10))
     ])
-
-    def test_bledny_zestawu_slow(self, w):
+    def test_bledny_zestaw_slow(self, w):
         with pytest.raises(ValueError):
             assert slownie.odmien(42, w)
 
@@ -215,19 +214,17 @@ class Test_Liczba():
     def test_liczby_ujemne(self, n, s):
         assert slownie.slownie(n) == s
 
-    bledne_typy = [
+    @pytest.mark.parametrize('v', [
         1234.5, [1234], "1234", "qwe",
         D(10) / D(3),
         F(10) / F(3),
         D(0.8) + D(0.2)
-    ]
-
-    @pytest.mark.parametrize('v', bledne_typy)
+    ])
     def test_wartosci_innych_typow(self, v):
         with pytest.raises(TypeError):
             slownie.slownie(v)
 
-    prawidlowe_typy = [
+    @pytest.mark.parametrize('v', [
         4.0,
         4.5 * 2,
         D(10),
@@ -236,9 +233,7 @@ class Test_Liczba():
         D('10.40') * D(10),
         F(100, 4),
         F(100) / F(5)
-    ]
-
-    @pytest.mark.parametrize('v', prawidlowe_typy)
+    ])
     def test_wartosci_prawidlowych_typow(self, v):
         print(v, slownie.slownie(v))
         assert slownie.slownie(v)
