@@ -37,11 +37,10 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
         return LICZEBNIKI[0][0]
     j, d, s = ((liczba//n)%10 for n in (1, 10, 100))
     if d == 1:
-        d = 0
-        j += 10
+        d, j = 0, j+10
     if liczba == 1 and wysoka:
         return ''
-    return ' '.join((LICZEBNIKI[n][x] for (n, x) in ((2, s), (1, d), (0, j)) if x > 0))
+    return ' '.join((LICZEBNIKI[n][x] for (x, n) in ((s, 2), (d, 1), (j, 0)) if x > 0))
 
 def odmien(liczba: int, slowa: list) -> str:
     if liczba < 0:
@@ -53,7 +52,7 @@ def odmien(liczba: int, slowa: list) -> str:
     slowo_jeden, slowo_dwa, slowo_piec = slowa
     if liczba == 1:
         return slowo_jeden
-    if liczba % 10 in (2, 3, 4) and liczba % 100 not in (12, 13, 14):
+    if liczba % 10 in {2, 3, 4} and liczba % 100 not in {12, 13, 14}:
         return slowo_dwa
     return slowo_piec
 
@@ -73,13 +72,13 @@ def slownie(liczba: int) -> str:
         segmenty.append(liczba%1000)
         liczba //= 1000
     odmienione = [
-        ' '.join([
-            x for x in [
+        ' '.join((
+            x for x in (
                 grupa(int(segment), rzad > 0),
                 odmien(segment, RZEDY[rzad]) if rzad > 0 and segment != 0 else ''
-            ]
+            )
             if len(x) > 0
-        ])
+        ))
         for (rzad, segment) in list(enumerate(segmenty))[::-1]
         if segment != 0
     ]
