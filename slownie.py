@@ -26,7 +26,13 @@ class Slownie:
     )
 
     @classmethod
-    def grupa(cls, liczba: int, zero: bool, wysoka: bool = False) -> str:
+    def grupa(cls, liczba: int, zero: bool = True, wysoka: bool = False) -> str:
+        if type(liczba) != int:
+            raise TypeError
+        if liczba < 0:
+            raise ValueError
+        if liczba > 999:
+            raise ValueError
         j, d, s = ((liczba//n)%10 for n in (1, 10, 100))
         if d == 1:
             d = 0
@@ -53,6 +59,11 @@ class Slownie:
 
     @classmethod
     def liczba(cls, liczba: int) -> str:
+        try:
+            assert liczba == int(liczba)
+        except:
+            raise TypeError
+
         if liczba < 0:
             return "minus " + str(cls.liczba(-liczba))
         segmenty = []
@@ -64,7 +75,7 @@ class Slownie:
         odmienione = [
             ' '.join([
                 x for x in [
-                    cls.grupa(segment, (rzad, len(segmenty)) == (0, 1), rzad > 0),
+                    cls.grupa(int(segment), (rzad, len(segmenty)) == (0, 1), rzad > 0),
                     cls.odmien(segment, cls.rzedy[rzad]) if rzad > 0 and segment != 0 else ''
                 ]
                 if len(x) > 0

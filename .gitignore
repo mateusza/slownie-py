@@ -1,0 +1,4 @@
+__pycache__
+assets
+.pytest_cache
+pytest.html
