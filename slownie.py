@@ -30,9 +30,7 @@ LICZEBNIKI = (
 def grupa(liczba: int, wysoka: bool = False) -> str:
     if type(liczba) != int:
         raise TypeError
-    if liczba < 0:
-        raise ValueError
-    if liczba > 999:
+    if liczba < 0 or liczba > 999:
         raise ValueError
     if liczba == 0:
         return LICZEBNIKI[0][0]
@@ -47,9 +45,7 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
 def odmien(liczba: int, slowa: list) -> str:
     if liczba < 0:
         liczba = -liczba
-    try:
-        assert type(slowa) != str
-    except AssertionError:
+    if type(slowa) == str:
         raise TypeError
     slowo_jeden, slowo_dwa, slowo_piec = slowa
     if liczba == 1:
@@ -62,9 +58,7 @@ def odmien(liczba: int, slowa: list) -> str:
 def slownie(liczba: int) -> str:
     try:
         assert liczba == int(liczba)
-    except AssertionError:
-        raise TypeError
-    except ValueError:
+    except (AssertionError, ValueError):
         raise TypeError
 
     if liczba < 0:
