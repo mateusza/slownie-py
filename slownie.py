@@ -47,6 +47,10 @@ class Slownie:
     def odmien(liczba: int, slowa: list) -> str:
         if liczba < 0:
             liczba = -liczba
+        try:
+            assert type(slowa) != str
+        except:
+            raise TypeError
         slowo_jeden, slowo_dwa, slowo_piec = slowa
         if liczba == 1:
             return slowo_jeden

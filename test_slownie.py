@@ -69,6 +69,36 @@ class Test_Odmien():
         assert Slownie.odmien(222, self.odmiana) == 'koty'
         assert Slownie.odmien(905, self.odmiana) == 'kotów'
 
+    def test_str_zamiast_zestawu_slow(self):
+        with pytest.raises(TypeError):
+            assert Slownie.odmien(1, 'abc')
+        with pytest.raises(TypeError):
+            assert Slownie.odmien(1, 'abcdef')
+
+    def test_inny_typ_zamiast_zestawu_slow(self):
+        assert Slownie.odmien(7, ('mysz', 'myszy', 'myszy'))
+        assert Slownie.odmien(9, 'dom domy domów'.split())
+
+        with pytest.raises(TypeError):
+            assert Slownie.odmien(1, 1234)
+        with pytest.raises(TypeError):
+            assert Slownie.odmien(1, bool)
+
+    def test_za_krotki_zestaw_slow(self):
+
+        with pytest.raises(ValueError):
+            assert Slownie.odmien(1, [])
+        with pytest.raises(ValueError):
+            assert Slownie.odmien(1, ['pies'])
+        with pytest.raises(ValueError):
+            assert Slownie.odmien(1, ['pies', 'psy'])
+
+    def test_za_dlugi_zestaw_slow(self):
+        with pytest.raises(ValueError):
+            assert Slownie.odmien(1, ['pies', 'psy', 'psów', 'psami'])
+        with pytest.raises(ValueError):
+            assert Slownie.odmien(1, range(1,10))
+
 class Test_Grupa():
     def test_jednostki(self):
         assert Slownie.grupa(0) == 'zero'
@@ -167,6 +197,7 @@ class Test_Liczba():
         assert Slownie.liczba(12000) == 'dwanaście tysięcy'
         assert Slownie.liczba(12001) == 'dwanaście tysięcy jeden'
         assert Slownie.liczba(12010) == 'dwanaście tysięcy dziesięć'
+        assert Slownie.liczba(112033) == 'sto dwanaście tysięcy trzydzieści trzy'
 
     def test_ujemne(self):
         assert Slownie.liczba(-1) == "minus jeden"
