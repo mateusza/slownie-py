@@ -5,101 +5,108 @@ import pytest
 import slownie
 
 class Test_Odmien():
-    odmiana = ['kot', 'koty', 'kotów']
+    odmiana_kota = ['kot', 'koty', 'kotów']
 
-    def test_zakres_0_9(self):
-        assert slownie.odmien(0, self.odmiana) == 'kotów'
-        assert slownie.odmien(1, self.odmiana) == 'kot'
-        assert slownie.odmien(2, self.odmiana) == 'koty'
-        assert slownie.odmien(3, self.odmiana) == 'koty'
-        assert slownie.odmien(4, self.odmiana) == 'koty'
-        assert slownie.odmien(5, self.odmiana) == 'kotów'
-        assert slownie.odmien(6, self.odmiana) == 'kotów'
+    odmiana_testy = [
+        (0, odmiana_kota,'kotów'),
+        (1, odmiana_kota,'kot'),
+        (2, odmiana_kota,'koty'),
+        (3, odmiana_kota,'koty'),
+        (4, odmiana_kota,'koty'),
+        (5, odmiana_kota,'kotów'),
+        (6, odmiana_kota,'kotów'),
+        (10, odmiana_kota,'kotów'),
+        (11, odmiana_kota,'kotów'),
+        (12, odmiana_kota,'kotów'),
+        (13, odmiana_kota,'kotów'),
+        (14, odmiana_kota,'kotów'),
+        (19, odmiana_kota,'kotów'),
+        (20, odmiana_kota,'kotów'),
+        (21, odmiana_kota,'kotów'),
+        (22, odmiana_kota,'koty'),
+        (23, odmiana_kota,'koty'),
+        (24, odmiana_kota,'koty'),
+        (25, odmiana_kota,'kotów'),
+        (29, odmiana_kota,'kotów'),
+        (30, odmiana_kota,'kotów'),
+        (31, odmiana_kota,'kotów'),
+        (32, odmiana_kota,'koty'),
+        (33, odmiana_kota,'koty'),
+        (34, odmiana_kota,'koty'),
+        (35, odmiana_kota,'kotów'),
+        (39, odmiana_kota,'kotów'),
+        (40, odmiana_kota,'kotów'),
+        (41, odmiana_kota,'kotów'),
+        (42, odmiana_kota,'koty'),
+        (43, odmiana_kota,'koty'),
+        (44, odmiana_kota,'koty'),
+        (45, odmiana_kota,'kotów'),
+        (49, odmiana_kota,'kotów'),
+        (99, odmiana_kota,'kotów'),
+        (100, odmiana_kota,'kotów'),
+        (101, odmiana_kota,'kotów'),
+        (102, odmiana_kota,'koty'),
+        (103, odmiana_kota,'koty'),
+        (105, odmiana_kota,'kotów'),
+        (112, odmiana_kota,'kotów'),
+        (115, odmiana_kota,'kotów'),
+        (122, odmiana_kota,'koty'),
+        (125, odmiana_kota,'kotów'),
+        (200, odmiana_kota,'kotów'),
+        (201, odmiana_kota,'kotów'),
+        (202, odmiana_kota,'koty'),
+        (203, odmiana_kota,'koty'),
+        (205, odmiana_kota,'kotów'),
+        (215, odmiana_kota,'kotów'),
+        (222, odmiana_kota,'koty'),
+        (905, odmiana_kota,'kotów')
+    ]
 
-    def test_zakres_10_19(self):
-        assert slownie.odmien(10, self.odmiana) == 'kotów'
-        assert slownie.odmien(11, self.odmiana) == 'kotów'
-        assert slownie.odmien(12, self.odmiana) == 'kotów'
-        assert slownie.odmien(13, self.odmiana) == 'kotów'
-        assert slownie.odmien(14, self.odmiana) == 'kotów'
-        assert slownie.odmien(19, self.odmiana) == 'kotów'
+    @pytest.mark.parametrize('n,o,s', odmiana_testy)
+    def test_zakres_0_9(self, n, o, s):
+        assert slownie.odmien(n, o) == s
 
-    def test_zakres_20_99(self):
-        assert slownie.odmien(20, self.odmiana) == 'kotów'
-        assert slownie.odmien(21, self.odmiana) == 'kotów'
-        assert slownie.odmien(22, self.odmiana) == 'koty'
-        assert slownie.odmien(23, self.odmiana) == 'koty'
-        assert slownie.odmien(24, self.odmiana) == 'koty'
-        assert slownie.odmien(25, self.odmiana) == 'kotów'
-        assert slownie.odmien(29, self.odmiana) == 'kotów'
-        assert slownie.odmien(30, self.odmiana) == 'kotów'
-        assert slownie.odmien(31, self.odmiana) == 'kotów'
-        assert slownie.odmien(32, self.odmiana) == 'koty'
-        assert slownie.odmien(33, self.odmiana) == 'koty'
-        assert slownie.odmien(34, self.odmiana) == 'koty'
-        assert slownie.odmien(35, self.odmiana) == 'kotów'
-        assert slownie.odmien(39, self.odmiana) == 'kotów'
-        assert slownie.odmien(40, self.odmiana) == 'kotów'
-        assert slownie.odmien(41, self.odmiana) == 'kotów'
-        assert slownie.odmien(42, self.odmiana) == 'koty'
-        assert slownie.odmien(43, self.odmiana) == 'koty'
-        assert slownie.odmien(44, self.odmiana) == 'koty'
-        assert slownie.odmien(45, self.odmiana) == 'kotów'
-        assert slownie.odmien(49, self.odmiana) == 'kotów'
-        assert slownie.odmien(99, self.odmiana) == 'kotów'
+    bledne_typy_wartosci = [
+        'abc',
+        'abcdef',
+        1234,
+        True,
+        int,
+        bool
+    ]
 
-    def test_zakres_100_199(self):
-        assert slownie.odmien(100, self.odmiana) == 'kotów'
-        assert slownie.odmien(101, self.odmiana) == 'kotów'
-        assert slownie.odmien(102, self.odmiana) == 'koty'
-        assert slownie.odmien(103, self.odmiana) == 'koty'
-        assert slownie.odmien(105, self.odmiana) == 'kotów'
-        assert slownie.odmien(112, self.odmiana) == 'kotów'
-        assert slownie.odmien(115, self.odmiana) == 'kotów'
-        assert slownie.odmien(122, self.odmiana) == 'koty'
-        assert slownie.odmien(125, self.odmiana) == 'kotów'
-
-    def test_zakres_od_200(self):
-        assert slownie.odmien(200, self.odmiana) == 'kotów'
-        assert slownie.odmien(201, self.odmiana) == 'kotów'
-        assert slownie.odmien(202, self.odmiana) == 'koty'
-        assert slownie.odmien(203, self.odmiana) == 'koty'
-        assert slownie.odmien(205, self.odmiana) == 'kotów'
-        assert slownie.odmien(215, self.odmiana) == 'kotów'
-        assert slownie.odmien(222, self.odmiana) == 'koty'
-        assert slownie.odmien(905, self.odmiana) == 'kotów'
-
-    def test_str_zamiast_zestawu_slow(self):
+    @pytest.mark.parametrize('w', bledne_typy_wartosci)
+    def test_bledny_typ_zestawu_slow(self, w):
         with pytest.raises(TypeError):
-            assert slownie.odmien(1, 'abc')
-        with pytest.raises(TypeError):
-            assert slownie.odmien(1, 'abcdef')
+            assert slownie.odmien(42, w)
 
-    def test_inny_typ_zamiast_zestawu_slow(self):
-        assert slownie.odmien(7, ('mysz', 'myszy', 'myszy'))
-        assert slownie.odmien(9, 'dom domy domów'.split())
+    prawidlowe_wartosci = [
+        ('mysz', 'myszy', 'myszy'),
+        'dom domy domów'.split()
+    ]
 
-        with pytest.raises(TypeError):
-            assert slownie.odmien(1, 1234)
-        with pytest.raises(TypeError):
-            assert slownie.odmien(1, bool)
+    @pytest.mark.parametrize('w', prawidlowe_wartosci)
+    def test_prawidlowy_typ_zestawu_slow(self, w):
+        assert slownie.odmien(7, w)
 
-    def test_za_krotki_zestaw_slow(self):
+    bledne_wartosci = [
+        [],
+        ['pies'],
+        ['pies', 'psy'],
+        ['pies', 'psy', 'psów', 'psami'],
+        range(1, 10),
+        list(range(1, 10))
+    ]
 
+    @pytest.mark.parametrize('w', bledne_wartosci)
+    def test_bledny_typ_zestawu_slow(self, w):
         with pytest.raises(ValueError):
-            assert slownie.odmien(1, [])
-        with pytest.raises(ValueError):
-            assert slownie.odmien(1, ['pies'])
-        with pytest.raises(ValueError):
-            assert slownie.odmien(1, ['pies', 'psy'])
-
-    def test_za_dlugi_zestaw_slow(self):
-        with pytest.raises(ValueError):
-            assert slownie.odmien(1, ['pies', 'psy', 'psów', 'psami'])
-        with pytest.raises(ValueError):
-            assert slownie.odmien(1, range(1,10))
+            assert slownie.odmien(42, w)
 
 class Test_Grupa():
+    test_data = [
+            ]
+
     def test_jednostki(self):
         assert slownie.grupa(0) == 'zero'
         assert slownie.grupa(1) == 'jeden'
