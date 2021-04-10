@@ -151,6 +151,8 @@ class Test_Liczba():
         with pytest.raises(TypeError):
             Slownie.liczba([1234])
         with pytest.raises(TypeError):
+            Slownie.liczba("1234")
+        with pytest.raises(TypeError):
             Slownie.liczba("qwe")
         with pytest.raises(TypeError):
             Slownie.liczba(D(10) / D(3))
@@ -160,6 +162,7 @@ class Test_Liczba():
             Slownie.liczba(D(0.8) + D(0.2))
 
         assert Slownie.liczba(4.0)
+        assert Slownie.liczba(4.5 * 2)
         assert Slownie.liczba(D(10))
         assert Slownie.liczba(D(10.0))
         assert Slownie.liczba(D(10.25) * D(100)) 
