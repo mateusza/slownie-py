@@ -6,103 +6,99 @@ import slownie
 
 
 class Test_Odmien():
-    odmiana_kota = ['kot', 'koty', 'kotów']
-
-    odmiana_testy = [
-        (0, odmiana_kota, 'kotów'),
-        (1, odmiana_kota, 'kot'),
-        (2, odmiana_kota, 'koty'),
-        (3, odmiana_kota, 'koty'),
-        (4, odmiana_kota, 'koty'),
-        (5, odmiana_kota, 'kotów'),
-        (6, odmiana_kota, 'kotów'),
-        (10, odmiana_kota, 'kotów'),
-        (11, odmiana_kota, 'kotów'),
-        (12, odmiana_kota, 'kotów'),
-        (13, odmiana_kota, 'kotów'),
-        (14, odmiana_kota, 'kotów'),
-        (19, odmiana_kota, 'kotów'),
-        (20, odmiana_kota, 'kotów'),
-        (21, odmiana_kota, 'kotów'),
-        (22, odmiana_kota, 'koty'),
-        (23, odmiana_kota, 'koty'),
-        (24, odmiana_kota, 'koty'),
-        (25, odmiana_kota, 'kotów'),
-        (29, odmiana_kota, 'kotów'),
-        (30, odmiana_kota, 'kotów'),
-        (31, odmiana_kota, 'kotów'),
-        (32, odmiana_kota, 'koty'),
-        (33, odmiana_kota, 'koty'),
-        (34, odmiana_kota, 'koty'),
-        (35, odmiana_kota, 'kotów'),
-        (39, odmiana_kota, 'kotów'),
-        (40, odmiana_kota, 'kotów'),
-        (41, odmiana_kota, 'kotów'),
-        (42, odmiana_kota, 'koty'),
-        (43, odmiana_kota, 'koty'),
-        (44, odmiana_kota, 'koty'),
-        (45, odmiana_kota, 'kotów'),
-        (49, odmiana_kota, 'kotów'),
-        (99, odmiana_kota, 'kotów'),
-        (100, odmiana_kota, 'kotów'),
-        (101, odmiana_kota, 'kotów'),
-        (102, odmiana_kota, 'koty'),
-        (103, odmiana_kota, 'koty'),
-        (105, odmiana_kota, 'kotów'),
-        (112, odmiana_kota, 'kotów'),
-        (115, odmiana_kota, 'kotów'),
-        (122, odmiana_kota, 'koty'),
-        (125, odmiana_kota, 'kotów'),
-        (200, odmiana_kota, 'kotów'),
-        (201, odmiana_kota, 'kotów'),
-        (202, odmiana_kota, 'koty'),
-        (203, odmiana_kota, 'koty'),
-        (205, odmiana_kota, 'kotów'),
-        (215, odmiana_kota, 'kotów'),
-        (222, odmiana_kota, 'koty'),
-        (905, odmiana_kota, 'kotów')
-    ]
-
-    @pytest.mark.parametrize('n,o,s', odmiana_testy)
+    @pytest.mark.parametrize(
+        'n,o,s',
+        [(n, ['kot', 'koty', 'kotów'], s)
+            for (n,s) in [
+                (0, 'kotów'),
+                (1, 'kot'),
+                (2, 'koty'),
+                (3, 'koty'),
+                (4, 'koty'),
+                (5, 'kotów'),
+                (6, 'kotów'),
+                (10, 'kotów'),
+                (11, 'kotów'),
+                (12, 'kotów'),
+                (13, 'kotów'),
+                (14, 'kotów'),
+                (19, 'kotów'),
+                (20, 'kotów'),
+                (21, 'kotów'),
+                (22, 'koty'),
+                (23, 'koty'),
+                (24, 'koty'),
+                (25, 'kotów'),
+                (29, 'kotów'),
+                (30, 'kotów'),
+                (31, 'kotów'),
+                (32, 'koty'),
+                (33, 'koty'),
+                (34, 'koty'),
+                (35, 'kotów'),
+                (39, 'kotów'),
+                (40, 'kotów'),
+                (41, 'kotów'),
+                (42, 'koty'),
+                (43, 'koty'),
+                (44, 'koty'),
+                (45, 'kotów'),
+                (49, 'kotów'),
+                (99, 'kotów'),
+                (100, 'kotów'),
+                (101, 'kotów'),
+                (102, 'koty'),
+                (103, 'koty'),
+                (105, 'kotów'),
+                (112, 'kotów'),
+                (115, 'kotów'),
+                (122, 'koty'),
+                (125, 'kotów'),
+                (200, 'kotów'),
+                (201, 'kotów'),
+                (202, 'koty'),
+                (203, 'koty'),
+                (205, 'kotów'),
+                (215, 'kotów'),
+                (222, 'koty'),
+                (905, 'kotów')
+            ]
+        ]
+    )
     def test_zakres_0_9(self, n, o, s):
         print(f"{n} {slownie.odmien(n, o)} vs {s}")
         assert slownie.odmien(n, o) == s
 
-    bledne_typy_wartosci = [
+    @pytest.mark.parametrize('w', [
         'abc',
         'abcdef',
         1234,
         True,
         int,
         bool
-    ]
-
-    @pytest.mark.parametrize('w', bledne_typy_wartosci)
+    ])
     def test_bledny_typ_zestawu_slow(self, w):
         print(f"Odmieniam: {repr(w)}")
         with pytest.raises(TypeError):
             assert slownie.odmien(42, w)
 
-    prawidlowe_wartosci = [
+    @pytest.mark.parametrize('w', [
         ('mysz', 'myszy', 'myszy'),
         'dom domy domów'.split(),
         (f'dom{x}' for x in ('', 'y', 'ów'))
-    ]
-
-    @pytest.mark.parametrize('w', prawidlowe_wartosci)
+    ])
     def test_prawidlowy_typ_zestawu_slow(self, w):
         assert slownie.odmien(7, w)
 
-    bledne_wartosci = [
+    @pytest.mark.parametrize('w', [
         [],
         ['pies'],
         ['pies', 'psy'],
         ['pies', 'psy', 'psów', 'psami'],
         range(1, 10),
         list(range(1, 10))
-    ]
+    ])
 
-    @pytest.mark.parametrize('w', bledne_wartosci)
     def test_bledny_zestawu_slow(self, w):
         with pytest.raises(ValueError):
             assert slownie.odmien(42, w)
@@ -148,28 +144,24 @@ class Test_Grupa():
     def test_jednostki_z_pominieta_jedynka(self, n, s):
         assert slownie.grupa(n, True) == '' if n == 1 else s
 
-    liczby_spoza_zakresu = [
+    @pytest.mark.parametrize('n', [
         -1,
         -2,
         -100,
         1000,
         1001
-    ]
-
-    @pytest.mark.parametrize('n', liczby_spoza_zakresu)
+    ])
     def test_wartosci_spoza_zakresu(self, n):
         with pytest.raises(ValueError):
             slownie.grupa(n)
 
-    liczby_zlych_typow = [
+    @pytest.mark.parametrize('n', [
         -2.5,
         "123",
         "qwe",
         [100]
-    ]
-
-    @pytest.mark.parametrize('n', liczby_zlych_typow)
-    def test_wartosci_innych_typow(sel, n):
+    ])
+    def test_wartosci_innych_typow(self, n):
         with pytest.raises(TypeError):
             slownie.grupa(n)
 
