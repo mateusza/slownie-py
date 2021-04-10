@@ -49,7 +49,7 @@ def odmien(liczba: int, slowa: list) -> str:
         liczba = -liczba
     try:
         assert type(slowa) != str
-    except:
+    except AssertionError:
         raise TypeError
     slowo_jeden, slowo_dwa, slowo_piec = slowa
     if liczba == 1:
@@ -62,7 +62,9 @@ def odmien(liczba: int, slowa: list) -> str:
 def slownie(liczba: int) -> str:
     try:
         assert liczba == int(liczba)
-    except:
+    except AssertionError:
+        raise TypeError
+    except ValueError:
         raise TypeError
 
     if liczba < 0:
