@@ -250,4 +250,3 @@ class Test_Liczba():
     def test_wartosci_prawidlowych_typow(self, v):
         print(v, slownie.slownie(v))
         assert slownie.slownie(v)
-
