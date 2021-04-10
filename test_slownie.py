@@ -109,16 +109,9 @@ class Test_Grupa():
         assert slownie.grupa(5) == 'pięć'
         assert slownie.grupa(9) == 'dziewięć'
 
-    def test_jednostki_z_pominietym_zerem(self):
-        assert slownie.grupa(0, False) == ''
-        assert slownie.grupa(1, False) == 'jeden'
-        assert slownie.grupa(2, False) == 'dwa'
-        assert slownie.grupa(8, False) == 'osiem'
-
-    def test_jednostki_z_pominietym_zerem_i_jedynka(self):
-        assert slownie.grupa(0, False, True) == ''
-        assert slownie.grupa(1, False, True) == ''
-        assert slownie.grupa(2, False, True) == 'dwa'
+    def test_jednostki_z_pominieta_jedynka(self):
+        assert slownie.grupa(1, True) == ''
+        assert slownie.grupa(2, True) == 'dwa'
 
     def test_zakres_10_20(self):
         assert slownie.grupa(10) == 'dziesięć'

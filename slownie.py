@@ -16,7 +16,7 @@ RZEDY = (
 )
 
 LICZEBNIKI = (
-        ('', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć',
+        ('zero', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć',
          'sześć', 'siedem', 'osiem', 'dziewięć', 'dziesięć',
          'jedenaście', 'dwanaście', 'trzynaście', 'czternaście', 'piętnaście',
          'szesnaście', 'siedemnaście', 'osiemnaście', 'dziewiętnaście'),
@@ -26,22 +26,22 @@ LICZEBNIKI = (
          'pięćset', 'sześćset', 'siedemset', 'osiemset', 'dziewięćset')
 )
 
-def grupa(liczba: int, zero: bool = True, wysoka: bool = False) -> str:
+def grupa(liczba: int, wysoka: bool = False) -> str:
     if type(liczba) != int:
         raise TypeError
     if liczba < 0:
         raise ValueError
     if liczba > 999:
         raise ValueError
+    if liczba == 0:
+        return LICZEBNIKI[0][0]
     j, d, s = ((liczba//n)%10 for n in (1, 10, 100))
     if d == 1:
         d = 0
         j += 10
-    if liczba == 0 and zero:
-        return 'zero'
     if liczba == 1 and wysoka:
         return ''
-    return ' '.join((LICZEBNIKI[n][x] for (n,x) in ((2, s), (1, d), (0, j)) if x > 0))
+    return ' '.join((LICZEBNIKI[n][x] for (n, x) in ((2, s), (1, d), (0, j)) if x > 0))
 
 def odmien(liczba: int, slowa: list) -> str:
     if liczba < 0:
@@ -64,22 +64,24 @@ def slownie(liczba: int) -> str:
         raise TypeError
 
     if liczba < 0:
-        return "minus " + str(slownie(-liczba))
-    segmenty = []
+        return "minus " + slownie(-liczba)
     if liczba == 0:
-        segmenty.append(0)
+        return LICZEBNIKI[0][0]
+
+    segmenty = []
     while liczba > 0:
         segmenty.append(liczba%1000)
         liczba //= 1000
     odmienione = [
         ' '.join([
             x for x in [
-                grupa(int(segment), (rzad, len(segmenty)) == (0, 1), rzad > 0),
+                grupa(int(segment), rzad > 0),
                 odmien(segment, RZEDY[rzad]) if rzad > 0 and segment != 0 else ''
             ]
             if len(x) > 0
         ])
         for (rzad, segment) in list(enumerate(segmenty))[::-1]
+        if segment != 0
     ]
     return ' '.join([o for o in odmienione if len(o) > 0])
 
