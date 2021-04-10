@@ -26,6 +26,7 @@ LICZEBNIKI = (
          'pięćset', 'sześćset', 'siedemset', 'osiemset', 'dziewięćset')
 )
 
+
 def grupa(liczba: int, wysoka: bool = False) -> str:
     if type(liczba) != int:
         raise TypeError
@@ -35,12 +36,13 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
         raise ValueError
     if liczba == 0:
         return LICZEBNIKI[0][0]
-    j, d, s = ((liczba//n)%10 for n in (1, 10, 100))
+    j, d, s = ((liczba//n) % 10 for n in (1, 10, 100))
     if d == 1:
         d, j = 0, j+10
     if liczba == 1 and wysoka:
         return ''
     return ' '.join((LICZEBNIKI[n][x] for (x, n) in ((s, 2), (d, 1), (j, 0)) if x > 0))
+
 
 def odmien(liczba: int, slowa: list) -> str:
     if liczba < 0:
@@ -55,6 +57,7 @@ def odmien(liczba: int, slowa: list) -> str:
     if liczba % 10 in {2, 3, 4} and liczba % 100 not in {12, 13, 14}:
         return slowo_dwa
     return slowo_piec
+
 
 def slownie(liczba: int) -> str:
     try:
