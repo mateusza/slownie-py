@@ -8,36 +8,66 @@ class Test_Odmien():
     odmiana = ['kot', 'koty', 'kotów']
 
     def test_zakres_0_9(self):
-        assert Slownie.odmien(0, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(1, self.odmiana) == self.odmiana[0]
-        assert Slownie.odmien(2, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(3, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(4, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(5, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(6, self.odmiana) == self.odmiana[2]
+        assert Slownie.odmien(0, self.odmiana) == 'kotów'
+        assert Slownie.odmien(1, self.odmiana) == 'kot'
+        assert Slownie.odmien(2, self.odmiana) == 'koty'
+        assert Slownie.odmien(3, self.odmiana) == 'koty'
+        assert Slownie.odmien(4, self.odmiana) == 'koty'
+        assert Slownie.odmien(5, self.odmiana) == 'kotów'
+        assert Slownie.odmien(6, self.odmiana) == 'kotów'
 
     def test_zakres_10_19(self):
-        assert Slownie.odmien(10, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(11, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(19, self.odmiana) == self.odmiana[2]
+        assert Slownie.odmien(10, self.odmiana) == 'kotów'
+        assert Slownie.odmien(11, self.odmiana) == 'kotów'
+        assert Slownie.odmien(12, self.odmiana) == 'kotów'
+        assert Slownie.odmien(13, self.odmiana) == 'kotów'
+        assert Slownie.odmien(14, self.odmiana) == 'kotów'
+        assert Slownie.odmien(19, self.odmiana) == 'kotów'
+
+    def test_zakres_20_99(self):
+        assert Slownie.odmien(20, self.odmiana) == 'kotów'
+        assert Slownie.odmien(21, self.odmiana) == 'kotów'
+        assert Slownie.odmien(22, self.odmiana) == 'koty'
+        assert Slownie.odmien(23, self.odmiana) == 'koty'
+        assert Slownie.odmien(24, self.odmiana) == 'koty'
+        assert Slownie.odmien(25, self.odmiana) == 'kotów'
+        assert Slownie.odmien(29, self.odmiana) == 'kotów'
+        assert Slownie.odmien(30, self.odmiana) == 'kotów'
+        assert Slownie.odmien(31, self.odmiana) == 'kotów'
+        assert Slownie.odmien(32, self.odmiana) == 'koty'
+        assert Slownie.odmien(33, self.odmiana) == 'koty'
+        assert Slownie.odmien(34, self.odmiana) == 'koty'
+        assert Slownie.odmien(35, self.odmiana) == 'kotów'
+        assert Slownie.odmien(39, self.odmiana) == 'kotów'
+        assert Slownie.odmien(40, self.odmiana) == 'kotów'
+        assert Slownie.odmien(41, self.odmiana) == 'kotów'
+        assert Slownie.odmien(42, self.odmiana) == 'koty'
+        assert Slownie.odmien(43, self.odmiana) == 'koty'
+        assert Slownie.odmien(44, self.odmiana) == 'koty'
+        assert Slownie.odmien(45, self.odmiana) == 'kotów'
+        assert Slownie.odmien(49, self.odmiana) == 'kotów'
+        assert Slownie.odmien(99, self.odmiana) == 'kotów'
 
     def test_zakres_100_199(self):
-        assert Slownie.odmien(100, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(101, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(102, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(103, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(105, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(112, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(115, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(122, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(125, self.odmiana) == self.odmiana[2]
+        assert Slownie.odmien(100, self.odmiana) == 'kotów'
+        assert Slownie.odmien(101, self.odmiana) == 'kotów'
+        assert Slownie.odmien(102, self.odmiana) == 'koty'
+        assert Slownie.odmien(103, self.odmiana) == 'koty'
+        assert Slownie.odmien(105, self.odmiana) == 'kotów'
+        assert Slownie.odmien(112, self.odmiana) == 'kotów'
+        assert Slownie.odmien(115, self.odmiana) == 'kotów'
+        assert Slownie.odmien(122, self.odmiana) == 'koty'
+        assert Slownie.odmien(125, self.odmiana) == 'kotów'
 
     def test_zakres_od_200(self):
-        assert Slownie.odmien(200, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(201, self.odmiana) == self.odmiana[2]
-        assert Slownie.odmien(202, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(203, self.odmiana) == self.odmiana[1]
-        assert Slownie.odmien(205, self.odmiana) == self.odmiana[2]
+        assert Slownie.odmien(200, self.odmiana) == 'kotów'
+        assert Slownie.odmien(201, self.odmiana) == 'kotów'
+        assert Slownie.odmien(202, self.odmiana) == 'koty'
+        assert Slownie.odmien(203, self.odmiana) == 'koty'
+        assert Slownie.odmien(205, self.odmiana) == 'kotów'
+        assert Slownie.odmien(215, self.odmiana) == 'kotów'
+        assert Slownie.odmien(222, self.odmiana) == 'koty'
+        assert Slownie.odmien(905, self.odmiana) == 'kotów'
 
 class Test_Grupa():
     def test_jednostki(self):
@@ -47,11 +77,13 @@ class Test_Grupa():
         assert Slownie.grupa(3) == 'trzy'
         assert Slownie.grupa(4) == 'cztery'
         assert Slownie.grupa(5) == 'pięć'
+        assert Slownie.grupa(9) == 'dziewięć'
 
     def test_jednostki_z_pominietym_zerem(self):
         assert Slownie.grupa(0, False) == ''
         assert Slownie.grupa(1, False) == 'jeden'
         assert Slownie.grupa(2, False) == 'dwa'
+        assert Slownie.grupa(8, False) == 'osiem'
 
     def test_jednostki_z_pominietym_zerem_i_jedynka(self):
         assert Slownie.grupa(0, False, True) == ''
@@ -131,6 +163,7 @@ class Test_Liczba():
         assert Slownie.liczba(2013) == 'dwa tysiące trzynaście'
         assert Slownie.liczba(5000) == 'pięć tysięcy'
         assert Slownie.liczba(6000) == 'sześć tysięcy'
+        assert Slownie.liczba(6008) == 'sześć tysięcy osiem'
         assert Slownie.liczba(12000) == 'dwanaście tysięcy'
         assert Slownie.liczba(12001) == 'dwanaście tysięcy jeden'
         assert Slownie.liczba(12010) == 'dwanaście tysięcy dziesięć'

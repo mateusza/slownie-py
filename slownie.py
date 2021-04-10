@@ -47,15 +47,12 @@ class Slownie:
     def odmien(liczba: int, slowa: list) -> str:
         if liczba < 0:
             liczba = -liczba
-        jeden, dwa, piec = slowa
-        slowo = piec
+        slowo_jeden, slowo_dwa, slowo_piec = slowa
         if liczba == 1:
-            slowo = jeden
-        jednosc = liczba % 10
-        reszta = liczba % 100
-        if jednosc in (2, 3, 4) and reszta not in range(11, 20):
-            slowo = dwa
-        return slowo
+            return slowo_jeden
+        if liczba % 10 in (2, 3, 4) and liczba % 100 not in range(11, 20):
+            return slowo_dwa
+        return slowo_piec
 
     @classmethod
     def liczba(cls, liczba: int) -> str:
