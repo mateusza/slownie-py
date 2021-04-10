@@ -72,7 +72,9 @@ class Test_Odmien():
         1234,
         True,
         int,
-        bool
+        bool,
+        {},
+        set([1, 2, 34])
     ]
 
     @pytest.mark.parametrize('w', bledne_typy_wartosci)
@@ -82,7 +84,8 @@ class Test_Odmien():
 
     prawidlowe_wartosci = [
         ('mysz', 'myszy', 'myszy'),
-        'dom domy domów'.split()
+        'dom domy domów'.split(),
+        (f'dom{x}' for x in ('', 'y', 'ów'))
     ]
 
     @pytest.mark.parametrize('w', prawidlowe_wartosci)
@@ -104,73 +107,65 @@ class Test_Odmien():
             assert slownie.odmien(42, w)
 
 class Test_Grupa():
-    test_data = [
-            ]
+    liczby_slownie = [
+        (0, 'zero'),
+        (1, 'jeden'),
+        (2, 'dwa'),
+        (3, 'trzy'),
+        (4, 'cztery'),
+        (5, 'pięć'),
+        (9, 'dziewięć'),
+        (10, 'dziesięć'),
+        (11, 'jedenaście'),
+        (12, 'dwanaście'),
+        (13, 'trzynaście'),
+        (19, 'dziewiętnaście'),
+        (20, 'dwadzieścia'),
+        (21, 'dwadzieścia jeden'),
+        (22, 'dwadzieścia dwa'),
+        (32, 'trzydzieści dwa'),
+        (33, 'trzydzieści trzy'),
+        (43, 'czterdzieści trzy'),
+        (53, 'pięćdziesiąt trzy'),
+        (99, 'dziewięćdziesiąt dziewięć'),
+        (100, 'sto'),
+        (200, 'dwieście'),
+        (300, 'trzysta'),
+        (400, 'czterysta')
+    ]
 
-    def test_jednostki(self):
-        assert slownie.grupa(0) == 'zero'
-        assert slownie.grupa(1) == 'jeden'
-        assert slownie.grupa(2) == 'dwa'
-        assert slownie.grupa(3) == 'trzy'
-        assert slownie.grupa(4) == 'cztery'
-        assert slownie.grupa(5) == 'pięć'
-        assert slownie.grupa(9) == 'dziewięć'
+    @pytest.mark.parametrize('n,s', liczby_slownie)
+    def test_jednostki(self, n, s):
+        assert slownie.grupa(n) == s
 
-    def test_jednostki_z_pominieta_jedynka(self):
-        assert slownie.grupa(1, True) == ''
-        assert slownie.grupa(2, True) == 'dwa'
+    @pytest.mark.parametrize('n,s', liczby_slownie)
+    def test_jednostki_z_pominieta_jedynka(self, n, s):
+        assert slownie.grupa(n, True) == '' if n == 1 else s
 
-    def test_zakres_10_20(self):
-        assert slownie.grupa(10) == 'dziesięć'
-        assert slownie.grupa(11) == 'jedenaście'
-        assert slownie.grupa(12) == 'dwanaście'
-        assert slownie.grupa(13) == 'trzynaście'
-        assert slownie.grupa(19) == 'dziewiętnaście'
-        assert slownie.grupa(20) != 'dziesiętnaście'
+    liczby_spoza_zakresu = [
+        -1,
+        -2,
+        -100,
+        1000,
+        1001
+    ]
 
-    def test_zakres_20_99(self):
-        assert slownie.grupa(20) == 'dwadzieścia'
-        assert slownie.grupa(21) == 'dwadzieścia jeden'
-        assert slownie.grupa(22) == 'dwadzieścia dwa'
-        assert slownie.grupa(32) == 'trzydzieści dwa'
-        assert slownie.grupa(33) == 'trzydzieści trzy'
-        assert slownie.grupa(43) == 'czterdzieści trzy'
-        assert slownie.grupa(53) == 'pięćdziesiąt trzy'
-        assert slownie.grupa(99) == 'dziewięćdziesiąt dziewięć'
-
-    def test_setki(self):
-        assert slownie.grupa(100) == 'sto'
-        assert slownie.grupa(200) == 'dwieście'
-        assert slownie.grupa(300) == 'trzysta'
-        assert slownie.grupa(400) == 'czterysta'
-
-    def test_wartosci_spoza_zakresu(self):
-        assert slownie.grupa(0)
-        assert slownie.grupa(1)
-        assert slownie.grupa(999)
-
+    @pytest.mark.parametrize('n', liczby_spoza_zakresu)
+    def test_wartosci_spoza_zakresu(self, n):
         with pytest.raises(ValueError):
-            slownie.grupa(-1)
-        with pytest.raises(ValueError):
-            slownie.grupa(-2)
-        with pytest.raises(ValueError):
-            slownie.grupa(-100)
-        with pytest.raises(ValueError):
-            slownie.grupa(1000)
-        with pytest.raises(ValueError):
-            slownie.grupa(1002)
-        with pytest.raises(ValueError):
-            slownie.grupa(1000000)
+            slownie.grupa(n)
 
-    def test_wartosci_innych_typow(self):
+    liczby_zlych_typow = [
+        -2.5,
+        "123",
+        "qwe",
+        [100]
+    ]
+
+    @pytest.mark.parametrize('n', liczby_zlych_typow)
+    def test_wartosci_innych_typow(sel, n):
         with pytest.raises(TypeError):
-            slownie.grupa(-2.5)
-        with pytest.raises(TypeError):
-            slownie.grupa("123")
-        with pytest.raises(TypeError):
-            slownie.grupa("qwe")
-        with pytest.raises(TypeError):
-            slownie.grupa([100])
+            slownie.grupa(n)
 
 class Test_Liczba():
     def test_zakres_0_999(self):
