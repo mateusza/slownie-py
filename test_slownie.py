@@ -210,7 +210,7 @@ class Test_Liczba():
     def test_liczby(self, n, s):
         assert slownie.slownie(n) == s
 
-    @pytest.mark.parametrize('n,s', ((-n, f"minus {s}") for (n, s) in liczby_slownie if n > 0))
+    @pytest.mark.parametrize('n,s', [(-n, f"minus {s}") for (n, s) in liczby_slownie if n > 0])
     def test_liczby_ujemne(self, n, s):
         assert slownie.slownie(n) == s
 
@@ -225,15 +225,16 @@ class Test_Liczba():
             slownie.slownie(v)
 
     @pytest.mark.parametrize('v', [
-        4.0,
-        4.5 * 2,
-        D(10),
-        D(10.0),
-        D(10.25) * D(100),
-        D('10.40') * D(10),
-        F(100, 4),
-        F(100) / F(5)
+        (4.0,       4),
+        (4.5 * 2,   9),
+        (D(10),     10),
+        (D(10.0),   10),
+        (D(10.25) * D(100), 1025),
+        (D('10.40') * D(10), 104),
+        (F(100, 4), 25),
+        (F(100) / F(5), 20)
     ])
     def test_wartosci_prawidlowych_typow(self, v):
-        print(v, slownie.slownie(v))
-        assert slownie.slownie(v)
+        v1, v2 = v
+        print(v, slownie.slownie(v1), slownie.slownie(v2))
+        assert slownie.slownie(v1) == slownie.slownie(v2)
