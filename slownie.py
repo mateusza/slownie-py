@@ -1,40 +1,40 @@
 #!/usr/bin/env python3
 
-RZEDY = (
-        ('', '', ''),
-        ('tysiąc', 'tysiące', 'tysięcy'),
-        ('milion', 'miliony', 'milionów'),
-        ('miliard', 'miliardy', 'miliardów'),
-        ('bilion', 'biliony', 'bilionów'),
-        ('biliard', 'biliardy', 'biliardów'),
-        ('trylion', 'tryliony', 'trylionów'),
-        ('tryliard', 'tryliardy', 'tryliardów'),
-        ('kwadrylion', 'kwadryliony', 'kwadrylionów'),
-        ('kwadryliard', 'kwadryliardy', 'kwadryliardów'),
-        ('kwintylion', 'kwintyliony', 'kwintylionów'),
-        ('kwintyliard', 'kwintyliardy', 'kwintyliardów')
-)
+RZEDY = [
+        ['', '', ''],
+        ['tysiąc', 'tysiące', 'tysięcy'],
+        ['milion', 'miliony', 'milionów'],
+        ['miliard', 'miliardy', 'miliardów'],
+        ['bilion', 'biliony', 'bilionów'],
+        ['biliard', 'biliardy', 'biliardów'],
+        ['trylion', 'tryliony', 'trylionów'],
+        ['tryliard', 'tryliardy', 'tryliardów'],
+        ['kwadrylion', 'kwadryliony', 'kwadrylionów'],
+        ['kwadryliard', 'kwadryliardy', 'kwadryliardów'],
+        ['kwintylion', 'kwintyliony', 'kwintylionów'],
+        ['kwintyliard', 'kwintyliardy', 'kwintyliardów']
+]
 
-LICZEBNIKI = (
-        ('zero', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć',
+LICZEBNIKI = [
+        ['zero', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć',
          'sześć', 'siedem', 'osiem', 'dziewięć', 'dziesięć',
          'jedenaście', 'dwanaście', 'trzynaście', 'czternaście', 'piętnaście',
-         'szesnaście', 'siedemnaście', 'osiemnaście', 'dziewiętnaście'),
-        ('', 'dziesięć', 'dwadzieścia', 'trzydzieści', 'czterdzieści',
-         'pięćdziesiąt', 'sześćdziesiąt', 'siedemdziesiąt', 'osiemdziesiąt', 'dziewięćdziesiąt'),
-        ('', 'sto', 'dwieście', 'trzysta', 'czterysta',
-         'pięćset', 'sześćset', 'siedemset', 'osiemset', 'dziewięćset')
-)
+         'szesnaście', 'siedemnaście', 'osiemnaście', 'dziewiętnaście'],
+        ['', 'dziesięć', 'dwadzieścia', 'trzydzieści', 'czterdzieści',
+         'pięćdziesiąt', 'sześćdziesiąt', 'siedemdziesiąt', 'osiemdziesiąt', 'dziewięćdziesiąt'],
+        ['', 'sto', 'dwieście', 'trzysta', 'czterysta',
+         'pięćset', 'sześćset', 'siedemset', 'osiemset', 'dziewięćset']
+]
 
 
 def grupa(liczba: int, wysoka: bool = False) -> str:
     if type(liczba) != int:
         raise TypeError
-    if liczba < 0 or liczba > 999:
-        raise ValueError
     if liczba == 0:
         return LICZEBNIKI[0][0]
-    j, d, s = ((liczba//n) % 10 for n in (1, 10, 100))
+    if not 0 <= liczba <= 999:
+        raise ValueError
+    j, d, s = ((liczba // n) % 10 for n in (1, 10, 100))
     if d == 1:
         d, j = 0, j+10
     if liczba == 1 and wysoka:
