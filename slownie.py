@@ -37,7 +37,7 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
         return LICZEBNIKI[0][0]
     if not 0 <= liczba <= 999:
         raise ValueError
-    j, d, s = ((liczba // n) % 10 for n in (1, 10, 100))
+    j, d, s = ((liczba // n) % 10 for n in [1, 10, 100])
     if d == 1:
         d, j = 0, j + 10
     if liczba == 1 and wysoka:
@@ -47,8 +47,7 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
 
 def odmien(liczba: int, slowa: list) -> str:
     """Odmień rzeczownik w odpowiednim przypadku zależnym od liczby."""
-    if liczba < 0:
-        liczba = -liczba
+    liczba = abs(liczba)
     if isinstance(slowa, str):
         raise TypeError
     slowo_jeden, slowo_dwa, slowo_piec = slowa
@@ -83,7 +82,7 @@ def slownie(liczba: int) -> str:
             )
             if len(x) > 0
         ))
-        for (rzad, segment) in list(enumerate(segmenty))[::-1]
+        for (rzad, segment) in [*enumerate(segmenty)][::-1]
         if segment != 0
     ]
     return ' '.join([o for o in odmienione if len(o) > 0])
