@@ -31,7 +31,7 @@ LICZEBNIKI = [
 
 def grupa(liczba: int, wysoka: bool = False) -> str:
     """Zamień 3-cyfrową grupę na zapis słowny. (0-999)"""
-    if isinstance(liczba, int):
+    if not isinstance(liczba, int):
         raise TypeError
     if liczba == 0:
         return LICZEBNIKI[0][0]
@@ -39,10 +39,10 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
         raise ValueError
     j, d, s = ((liczba // n) % 10 for n in (1, 10, 100))
     if d == 1:
-        d, j = 0, j+10
+        d, j = 0, j + 10
     if liczba == 1 and wysoka:
         return ''
-    return ' '.join((LICZEBNIKI[n][x] for (x, n) in ((s, 2), (d, 1), (j, 0)) if x > 0))
+    return ' '.join((LICZEBNIKI[n][x] for (x, n) in [(s, 2), (d, 1), (j, 0)] if x > 0))
 
 
 def odmien(liczba: int, slowa: list) -> str:
@@ -63,8 +63,8 @@ def slownie(liczba: int) -> str:
     """Zapis słowny dowolnie dużej liczby"""
     try:
         assert liczba == int(liczba)
-    except (AssertionError, ValueError):
-        raise TypeError
+    except (AssertionError, ValueError) as ex:
+        raise TypeError from ex
 
     if liczba < 0:
         return "minus " + slownie(-liczba)
