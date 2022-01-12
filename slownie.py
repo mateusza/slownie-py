@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""slownie.py - Konwertuj liczby na zapis słowny w języku polskim"""
+
 RZEDY = [
         ['', '', ''],
         ['tysiąc', 'tysiące', 'tysięcy'],
@@ -28,7 +30,8 @@ LICZEBNIKI = [
 
 
 def grupa(liczba: int, wysoka: bool = False) -> str:
-    if type(liczba) != int:
+    """Zamień 3-cyfrową grupę na zapis słowny. (0-999)"""
+    if isinstance(liczba, int):
         raise TypeError
     if liczba == 0:
         return LICZEBNIKI[0][0]
@@ -43,9 +46,10 @@ def grupa(liczba: int, wysoka: bool = False) -> str:
 
 
 def odmien(liczba: int, slowa: list) -> str:
+    """Odmień rzeczownik w odpowiednim przypadku zależnym od liczby."""
     if liczba < 0:
         liczba = -liczba
-    if type(slowa) == str:
+    if isinstance(slowa, str):
         raise TypeError
     slowo_jeden, slowo_dwa, slowo_piec = slowa
     if liczba == 1:
@@ -56,6 +60,7 @@ def odmien(liczba: int, slowa: list) -> str:
 
 
 def slownie(liczba: int) -> str:
+    """Zapis słowny dowolnie dużej liczby"""
     try:
         assert liczba == int(liczba)
     except (AssertionError, ValueError):
