@@ -166,11 +166,8 @@ class Test_Grupa():
 
 
 class Test_Liczba():
-    import decimal
-    import fractions
-
-    D = decimal.Decimal
-    F = fractions.Fraction
+    from decimal import Decimal as D
+    from fractions import Fraction as F
 
     liczby_slownie = [
         (0, 'zero'),
